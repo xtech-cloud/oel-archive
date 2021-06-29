@@ -6,7 +6,7 @@ namespace XTC.oelArchive
     {
         public void Open(byte[] _data)
         {
-            stream = new MemoryStream(_data);
+            stream_ = new MemoryStream(_data);
             parseHeader();
         }
     }

@@ -11,7 +11,7 @@ namespace XTC.oelArchive
                 return;
             }
 
-            stream = File.OpenRead(_filepath);
+            stream_ = File.OpenRead(_filepath);
             parseHeader();
         }
 
@@ -22,7 +22,7 @@ namespace XTC.oelArchive
                 return;
             }
 
-            stream = new MemoryStream(_data);
+            stream_ = new MemoryStream(_data);
             parseHeader();
         }
     }
