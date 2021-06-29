@@ -5,6 +5,9 @@
     <Authors>XTC</Authors>
     <Company>xtech.cloud</Company>
     <Product>oelArchive</Product>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
   </PropertyGroup>
 
 </Project>
