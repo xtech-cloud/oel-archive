@@ -1,0 +1,20 @@
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>oel.archive.wpf</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\bridge\bridge.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HandyControl" Version="3.1.0" />
+    <PackageReference Include="oelArchive" Version="1.1.0" />
+    <PackageReference Include="oelMVCS" Version="1.2.0" />
+  </ItemGroup>
+
+</Project>

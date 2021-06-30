@@ -1,0 +1,11 @@
+
+.vs/
+app/bin/
+app/obj/
+bridge/bin/
+bridge/obj/
+module/bin/
+module/obj/
+wpf/bin/
+wpf/obj/
+*.user

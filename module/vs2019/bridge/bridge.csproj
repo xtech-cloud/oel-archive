@@ -1,0 +1,13 @@
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>oel.archive.bridge</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="oelMVCS" Version="1.2.0" />
+  </ItemGroup>
+
+</Project>
