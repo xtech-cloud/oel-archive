@@ -11,14 +11,23 @@ namespace test
         {
             string archiveFile = Path.Combine(Path.GetTempPath(), "archive.bin");
             // Write
-            FileWriter writer = new FileWriter();
-            writer.SetPassword("abcd");
-            writer.Open(archiveFile, true);
-            writer.Write("a.text", Encoding.UTF8.GetBytes("aaaaaaaaa"));
-            writer.Write("b.text", Encoding.UTF8.GetBytes("bbb"));
-            writer.Write("1/c.text", Encoding.UTF8.GetBytes("ccc"));
-            writer.Flush();
-            writer.Close();
+            FileWriter fWriter = new FileWriter();
+            fWriter.SetPassword("abcd");
+            fWriter.Open(archiveFile, true);
+            fWriter.Write("a.text", Encoding.UTF8.GetBytes("aaaaaaaaa"));
+            fWriter.Write("b.text", Encoding.UTF8.GetBytes("bbb"));
+            fWriter.Write("1/c.text", Encoding.UTF8.GetBytes("ccc"));
+            fWriter.Flush();
+            fWriter.Close();
+
+            MemoryWriter mWriter = new MemoryWriter();
+            mWriter.Open();
+            mWriter.Write("c.text", Encoding.UTF8.GetBytes("ccccc"));
+            mWriter.Write("d.text", Encoding.UTF8.GetBytes("ddddd"));
+            mWriter.Write("2/f.text", Encoding.UTF8.GetBytes("fffff"));
+            mWriter.Flush();
+            byte[] data = mWriter.GetBytes();
+            mWriter.Close();
 
             // Read
 
@@ -28,18 +37,15 @@ namespace test
             foreach (string entry in fReader.entries)
             {
                 Console.WriteLine(entry);
-                byte[] data = fReader.Read(entry);
-                Console.WriteLine(Encoding.UTF8.GetString(data));
+                Console.WriteLine(Encoding.UTF8.GetString(fReader.Read(entry)));
             }
 
             MemoryReader mReader = new MemoryReader();
-            mReader.SetPassword("abcd");
-            mReader.Open(File.ReadAllBytes(archiveFile));
+            mReader.Open(data);
             foreach (string entry in mReader.entries)
             {
                 Console.WriteLine(entry);
-                byte[] data = fReader.Read(entry);
-                Console.WriteLine(Encoding.UTF8.GetString(data));
+                Console.WriteLine(Encoding.UTF8.GetString(mReader.Read(entry)));
             }
 
 
