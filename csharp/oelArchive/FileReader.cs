@@ -14,17 +14,6 @@ namespace XTC.oelArchive
             stream_ = File.OpenRead(_filepath);
             parseHeader();
         }
-
-        public void Open(byte[] _data)
-        {
-            if(null == _data | _data.Length == 0)
-            {
-                return;
-            }
-
-            stream_ = new MemoryStream(_data);
-            parseHeader();
-        }
     }
 }
 
