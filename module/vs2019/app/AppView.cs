@@ -14,7 +14,7 @@ namespace app
 
         protected override void setup()
         {
-            route("/module/view/attach", this.handleAttachView);
+            addRouter("/module/view/attach", this.handleAttachView);
         }
 
         private void handleAttachView(Model.Status _status, object _data)

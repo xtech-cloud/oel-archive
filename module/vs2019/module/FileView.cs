@@ -5,7 +5,7 @@ using XTC.oelMVCS;
 
 namespace oel.archive
 {
-    public class FileView: View
+    public class FileView : View
     {
         public const string NAME = "oel.archive.FileView";
 
@@ -28,10 +28,10 @@ namespace oel.archive
         {
             getLogger().Trace("setup oel.archive.FileView");
 
-           route("/oel/archive/File/Write", this.handleFileWrite);
-    
-           route("/oel/archive/File/Read", this.handleFileRead);
-    
+            addRouter("/oel/archive/File/Write", this.handleFileWrite);
+
+            addRouter("/oel/archive/File/Read", this.handleFileRead);
+
         }
 
         protected override void postSetup()
@@ -52,20 +52,20 @@ namespace oel.archive
         private void handleFileWrite(Model.Status _status, object _data)
         {
             var rsp = (Proto.BlankResponse)_data;
-            if(rsp._status._code.AsInt() == 0)
+            if (rsp._status._code.AsInt() == 0)
                 bridge.Alert("Success");
             else
                 bridge.Alert(string.Format("Failure：\n\nCode: {0}\nMessage:\n{1}", rsp._status._code.AsInt(), rsp._status._message.AsString()));
         }
-    
+
         private void handleFileRead(Model.Status _status, object _data)
         {
             var rsp = (Proto.BlankResponse)_data;
-            if(rsp._status._code.AsInt() == 0)
+            if (rsp._status._code.AsInt() == 0)
                 bridge.Alert("Success");
             else
                 bridge.Alert(string.Format("Failure：\n\nCode: {0}\nMessage:\n{1}", rsp._status._code.AsInt(), rsp._status._message.AsString()));
         }
-    
+
     }
 }
