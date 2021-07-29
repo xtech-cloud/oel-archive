@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="oelMVCS" Version="1.9.1" />
+    <PackageReference Include="oelMVCS" Version="1.9.3" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,9 +20,10 @@
 
     <DockPanel>
         <Border DockPanel.Dock="Left" Style="{StaticResource BorderRegion}" Width="200" Effect="{StaticResource EffectShadow1}">
-            <StackPanel Orientation="Vertical" Margin="8">
+            <StackPanel Orientation="Vertical" Margin="8" >
                 <TextBox Name="tbPassword" hc:InfoElement.Placeholder="密码" Style="{StaticResource TextBoxExtend}" Margin="0,32,0,0"/>
                 <Button Name="btnOpen" Content="打开归档文件" Margin="0,8,0,0" Style="{StaticResource ButtonDanger}" HorizontalAlignment="Stretch" Click="onOpenClicked"/>
+                <Button Name="btnClose" Content="关闭归档文件" Margin="0,8,0,0" Style="{StaticResource ButtonDanger}" HorizontalAlignment="Stretch" Click="onCloseClicked"/>
             </StackPanel>
 
         </Border>
@@ -33,10 +34,11 @@
                     </ListBox>
                 </DockPanel>
                 <hc:Divider DockPanel.Dock="Left" Orientation="Vertical"/>
-                <hc:SimplePanel Margin="16">
+                <hc:SimplePanel Name="spInfo" Margin="16">
                     <TextBox Name="tbEntry" hc:InfoElement.Title="文件" Style="{StaticResource TextBoxExtend}" Margin="0,16,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top"  hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="50" />
-                    <hc:ImageViewer Name="imgViewer" Background="{StaticResource SecondaryRegionBrush}" Margin="0,64,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    <TextBox Name="txtViewer" Style="{StaticResource TextBoxExtend}" Margin="0,64,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True"/>
+                    <hc:ImageViewer Name="imgViewer" Background="{StaticResource SecondaryRegionBrush}" Margin="0,64,0,48" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <TextBox Name="txtViewer" Style="{StaticResource TextBoxExtend}" Margin="0,64,0,48" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True"/>
+                    <TextBlock Name="tbTip" Style="{StaticResource TextBlockDefault}" VerticalAlignment="Bottom"></TextBlock>
                 </hc:SimplePanel>
             </DockPanel>
         </Border>
