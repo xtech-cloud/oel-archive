@@ -4,6 +4,10 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>oel.archive.module</AssemblyName>
+    <Version>1.1.4</Version>
+    <Authors>XTC</Authors>
+    <Company>xtech.cloud</Company>
+    <Product>OpenEL Archive</Product>
   </PropertyGroup>
 
   <ItemGroup>
