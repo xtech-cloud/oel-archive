@@ -1,5 +1,6 @@
 
 using HandyControl.Controls;
+using Microsoft.Win32;
 using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -28,19 +29,23 @@ namespace oel.archive
         public FileFacade facade { get; set; }
 
         private FileReader reader_ { get; set; }
+        private string path_ { get; set; }
 
         public FileControl()
         {
             InitializeComponent();
             tbPassword.Visibility = System.Windows.Visibility.Visible;
             btnOpen.Visibility = System.Windows.Visibility.Visible;
+            btnCreate.Visibility = System.Windows.Visibility.Visible;
+            btnPack.Visibility = System.Windows.Visibility.Collapsed;
+            btnUnpack.Visibility = System.Windows.Visibility.Collapsed;
             btnClose.Visibility = System.Windows.Visibility.Collapsed;
             spInfo.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private void onOpenClicked(object sender, System.Windows.RoutedEventArgs e)
         {
-            string path = string.Empty;
+            path_ = string.Empty;
             var openFileDialog = new Microsoft.Win32.OpenFileDialog()
             {
                 Filter = "All Files(*.*)|*.*"
@@ -50,19 +55,28 @@ namespace oel.archive
             if (!result)
                 return;
 
-            tbPassword.Visibility = System.Windows.Visibility.Hidden;
-            btnOpen.Visibility = System.Windows.Visibility.Collapsed;
-            btnClose.Visibility = System.Windows.Visibility.Visible;
 
             lbEntry.Items.Clear();
-            path = openFileDialog.FileName;
+            path_ = openFileDialog.FileName;
             reader_ = new FileReader();
             if (!string.IsNullOrEmpty(tbPassword.Text))
                 reader_.SetPassword(tbPassword.Text);
-            reader_.Open(path);
-            foreach (string entry in reader_.entries)
+            try
             {
-                lbEntry.Items.Add(entry);
+                reader_.Open(path_);
+                foreach (string entry in reader_.entries)
+                {
+                    lbEntry.Items.Add(entry);
+                }
+                btnOpen.Visibility = System.Windows.Visibility.Collapsed;
+                btnCreate.Visibility = System.Windows.Visibility.Collapsed;
+                btnPack.Visibility = System.Windows.Visibility.Collapsed;
+                btnUnpack.Visibility = System.Windows.Visibility.Visible;
+                btnClose.Visibility = System.Windows.Visibility.Visible;
+            }
+            catch (System.Exception ex)
+            {
+                (facade.getUiBridge() as IFileUiBridge).Alert(ex.Message);
             }
         }
 
@@ -117,14 +131,45 @@ namespace oel.archive
 
         private void onCloseClicked(object sender, System.Windows.RoutedEventArgs e)
         {
+            reader_.Close();
             lbEntry.Items.Clear();
             spInfo.Visibility = System.Windows.Visibility.Hidden;
-            tbPassword.Visibility = System.Windows.Visibility.Visible;
             btnOpen.Visibility = System.Windows.Visibility.Visible;
+            btnCreate.Visibility = System.Windows.Visibility.Visible;
+            btnPack.Visibility = System.Windows.Visibility.Collapsed;
+            btnUnpack.Visibility = System.Windows.Visibility.Collapsed;
             btnClose.Visibility = System.Windows.Visibility.Collapsed;
-            reader_.Close();
         }
 
+        private void onUnpackClicked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            string dir = Path.GetDirectoryName(path_);
+            dir = Path.Combine(dir, Path.GetFileNameWithoutExtension(path_));
+            if (Directory.Exists(dir))
+                Directory.Delete(dir, true);
+            Directory.CreateDirectory(dir);
+
+            foreach(var entry in reader_.entries)
+            {
+                string filepath = Path.Combine(dir, entry);
+                string subdir = Path.Combine(dir, Path.GetDirectoryName(entry));
+                File.WriteAllBytes(filepath, reader_.Read(entry));
+            }
+        }
+
+        private void onPackClicked(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
+
+        private void onCreateClicked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            btnOpen.Visibility = System.Windows.Visibility.Collapsed;
+            btnCreate.Visibility = System.Windows.Visibility.Collapsed;
+            btnPack.Visibility = System.Windows.Visibility.Visible;
+            btnUnpack.Visibility = System.Windows.Visibility.Collapsed;
+            btnClose.Visibility = System.Windows.Visibility.Visible;
+        }
 
         private string formatSize(long _size)
         {

@@ -22,7 +22,10 @@
         <Border DockPanel.Dock="Left" Style="{StaticResource BorderRegion}" Width="200" Effect="{StaticResource EffectShadow1}">
             <StackPanel Orientation="Vertical" Margin="8" >
                 <TextBox Name="tbPassword" hc:InfoElement.Placeholder="密码" Style="{StaticResource TextBoxExtend}" Margin="0,32,0,0"/>
-                <Button Name="btnOpen" Content="打开归档文件" Margin="0,8,0,0" Style="{StaticResource ButtonDanger}" HorizontalAlignment="Stretch" Click="onOpenClicked"/>
+                <Button Name="btnOpen" Content="打开归档文件" Margin="0,8,0,0" Style="{StaticResource ButtonPrimary}" HorizontalAlignment="Stretch" Click="onOpenClicked"/>
+                <Button Name="btnUnpack" Content="解开到文件夹" Margin="0,8,0,0" Style="{StaticResource ButtonInfo}" HorizontalAlignment="Stretch" Click="onUnpackClicked"/>
+                <Button Name="btnCreate" Content="创建归档文件" Margin="0,8,0,0" Style="{StaticResource ButtonPrimary}" HorizontalAlignment="Stretch" Click="onCreateClicked"/>
+                <Button Name="btnPack" Content="保存到文件" Margin="0,8,0,0" Style="{StaticResource ButtonInfo}" HorizontalAlignment="Stretch" Click="onPackClicked"/>
                 <Button Name="btnClose" Content="关闭归档文件" Margin="0,8,0,0" Style="{StaticResource ButtonDanger}" HorizontalAlignment="Stretch" Click="onCloseClicked"/>
             </StackPanel>
 
