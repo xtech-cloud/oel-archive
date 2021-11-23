@@ -26,7 +26,7 @@ namespace oel.archive
         {
             Dictionary<string, Any> paramMap = new Dictionary<string, Any>();
 
-            post(string.Format("{0}/oel/archive/File/Write", getConfig()["domain"].AsString()), paramMap, (_reply) =>
+            post(string.Format("{0}/oel/archive/File/Write", getConfig().getField("domain").AsString()), paramMap, (_reply) =>
             {
                 var options = new JsonSerializerOptions();
                 options.Converters.Add(new FieldConverter());
@@ -44,7 +44,7 @@ namespace oel.archive
         {
             Dictionary<string, Any> paramMap = new Dictionary<string, Any>();
 
-            post(string.Format("{0}/oel/archive/File/Read", getConfig()["domain"].AsString()), paramMap, (_reply) =>
+            post(string.Format("{0}/oel/archive/File/Read", getConfig().getField("domain").AsString()), paramMap, (_reply) =>
             {
                 var options = new JsonSerializerOptions();
                 options.Converters.Add(new FieldConverter());

@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <AssemblyName>oel.archive.wpf</AssemblyName>
-    <Version>1.1.4</Version>
+    <Version>1.1.5</Version>
     <Authors>XTC</Authors>
     <Company>xtech.cloud</Company>
     <Product>OpenEL Archive</Product>
@@ -18,7 +18,7 @@
   <ItemGroup>
     <PackageReference Include="HandyControl" Version="3.2.0" />
     <PackageReference Include="oelArchive" Version="1.1.0" />
-    <PackageReference Include="oelMVCS" Version="1.9.3" />
+    <PackageReference Include="oelMVCS" Version="1.9.5" />
   </ItemGroup>
 
 </Project>
