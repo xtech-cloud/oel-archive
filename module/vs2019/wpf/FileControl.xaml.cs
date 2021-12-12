@@ -96,10 +96,15 @@ namespace oel.archive
 
             spInfo.Visibility = System.Windows.Visibility.Visible;
             tbEntry.Text = entry;
+            string format = Path.GetExtension(entry);
+            if (format.StartsWith("."))
+                format = format.Remove(0, 1);
             try
             {
-                imgViewer.Visibility = entry.EndsWith(".png") || entry.EndsWith(".jpg") ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
-                txtViewer.Visibility = entry.EndsWith(".json") ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                List<string> imageFormats = new List<string>(tbImageFormat.Text.Split(';'));
+                List<string> txtFormats = new List<string>(tbTxtFormat.Text.Split(';'));
+                imgViewer.Visibility = imageFormats.Contains(format) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                txtViewer.Visibility = txtFormats.Contains(format) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
                 if (entry.EndsWith(".png"))
                 {
                     //不能适用using方式,否则图片的数据会被释放
@@ -163,6 +168,30 @@ namespace oel.archive
                         }
                     }
                 }
+                else if (txtFormats.Contains(format))
+                {
+                    byte[] data = null;
+                    if (null != reader_)
+                    {
+                        data = reader_.Read(entry);
+                    }
+                    else
+                    {
+                        data = File.ReadAllBytes(Path.Combine(path_, entry));
+                    }
+
+                    if (null != data)
+                    {
+                        txtViewer.Text = System.Text.Encoding.UTF8.GetString(data);
+                        tbTip.Text = string.Format("{0}", formatSize(data.Length));
+                    }
+                    else
+                    {
+                        txtViewer.Text = "";
+                        tbTip.Text = string.Format("{0}", formatSize(0));
+
+                    }
+                }
             }
             catch (System.Exception ex)
             {
@@ -205,10 +234,11 @@ namespace oel.archive
 
             foreach (var entry in reader_.entries)
             {
-                string subdir = Path.Combine(dir, Path.GetDirectoryName(entry));
+                string rename_entry = entry.Replace("://", "=$$");
+                string subdir = Path.Combine(dir, Path.GetDirectoryName(rename_entry));
                 if (!Directory.Exists(subdir))
                     Directory.CreateDirectory(subdir);
-                string filepath = Path.Combine(dir, entry);
+                string filepath = Path.Combine(dir, rename_entry);
                 File.WriteAllBytes(filepath, reader_.Read(entry));
             }
         }
@@ -248,8 +278,9 @@ namespace oel.archive
             getAllFiles(path_, path_, ref files);
             foreach (var file in files)
             {
+                string path = file.Replace("=$$", "://");
                 ListBoxItem item = new ListBoxItem();
-                item.Content = file;
+                item.Content = path;
                 item.Uid = Path.Combine(path_, file);
                 lbEntry.Items.Add(item);
             }
