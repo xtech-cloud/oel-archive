@@ -28,6 +28,9 @@
                 <Button Name="btnPack" Content="保存到文件" Margin="0,8,0,0" Style="{StaticResource ButtonInfo}" HorizontalAlignment="Stretch" Click="onPackClicked"/>
                 <Button Name="btnClose" Content="关闭归档文件" Margin="0,8,0,0" Style="{StaticResource ButtonDanger}" HorizontalAlignment="Stretch" Click="onCloseClicked"/>
 
+                <Button Name="btnBatchUnpack" Content="批量解包" Margin="0,24,0,0" Style="{StaticResource ButtonSuccess}" HorizontalAlignment="Stretch" Click="onBatchUnpackClicked"/>
+                <Button Name="btnBatchPack" Content="批量打包" Margin="0,8,0,0" Style="{StaticResource ButtonSuccess}" HorizontalAlignment="Stretch" Click="onBatchPackClicked"/>
+
                  <TextBox x:Name="tbImageFormat" hc:InfoElement.Title="图片格式" Style="{StaticResource TextBoxExtend}" Margin="0,32,0,0" Text="jpg;png" />
                  <TextBox x:Name="tbTxtFormat" hc:InfoElement.Title="文本格式" Style="{StaticResource TextBoxExtend}" Margin="0,12,0,0" Text="txt;json"/>
             </StackPanel>

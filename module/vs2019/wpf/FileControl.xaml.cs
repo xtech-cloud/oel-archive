@@ -315,5 +315,69 @@ namespace oel.archive
                 getAllFiles(_dir, subdir.FullName, ref _files);
             }
         }
+
+        private void onBatchUnpackClicked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Forms.FolderBrowserDialog dialog = new Forms.FolderBrowserDialog();
+            if (Forms.DialogResult.OK != dialog.ShowDialog())
+                return;
+
+            string dir = dialog.SelectedPath;
+
+            foreach (var file in Directory.GetFiles(dir))
+            {
+                try
+                {
+                    string dist_dir = Path.Combine(dir, Path.GetFileNameWithoutExtension(file));
+                    if (!Directory.Exists(dist_dir))
+                        Directory.CreateDirectory(dist_dir);
+                    FileReader reader = new FileReader();
+                    if (!string.IsNullOrEmpty(tbPassword.Text))
+                        reader.SetPassword(tbPassword.Text);
+                    reader.Open(file);
+                    foreach (var entry in reader.entries)
+                    {
+                        string rename_entry = entry.Replace("://", "=$$");
+                        string subdir = Path.Combine(dist_dir, Path.GetDirectoryName(rename_entry));
+                        if (!Directory.Exists(subdir))
+                            Directory.CreateDirectory(subdir);
+                        string filepath = Path.Combine(subdir, rename_entry);
+                        File.WriteAllBytes(filepath, reader.Read(entry));
+                    }
+                    reader.Close();
+                }
+                catch (System.Exception ex)
+                {
+                    Growl.Warning(ex.Message, "StatusGrowl");
+                }
+            }
+        }
+
+        private void onBatchPackClicked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Forms.FolderBrowserDialog dialog = new Forms.FolderBrowserDialog();
+            if (Forms.DialogResult.OK != dialog.ShowDialog())
+                return;
+
+            string dir = dialog.SelectedPath;
+            foreach (string subdir in Directory.GetDirectories(dir))
+            {
+                string dist_file = subdir + ".xar";
+                List<string> files = new List<string>();
+                getAllFiles(subdir, subdir, ref files);
+                FileWriter writer = new FileWriter();
+                if (!string.IsNullOrEmpty(tbPassword.Text))
+                    writer.SetPassword(tbPassword.Text);
+                writer.Open(dist_file, true);
+                foreach (var file in files)
+                {
+                    string path = file.Replace("=$$", "://");
+                    writer.Write(path, File.ReadAllBytes(Path.Combine(subdir, path)));
+                }
+                writer.Flush();
+                writer.Close();
+            }
+
+        }
     }
 }
