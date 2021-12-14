@@ -372,7 +372,7 @@ namespace oel.archive
                 foreach (var file in files)
                 {
                     string path = file.Replace("=$$", "://");
-                    writer.Write(path, File.ReadAllBytes(Path.Combine(subdir, path)));
+                    writer.Write(path, File.ReadAllBytes(Path.Combine(subdir, file)));
                 }
                 writer.Flush();
                 writer.Close();
