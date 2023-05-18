@@ -278,7 +278,7 @@ namespace oel.archive
             getAllFiles(path_, path_, ref files);
             foreach (var file in files)
             {
-                string path = file.Replace("=$$", "://");
+                string path = file.Replace("=$$", "://").Replace("\\","/");
                 ListBoxItem item = new ListBoxItem();
                 item.Content = path;
                 item.Uid = Path.Combine(path_, file);
